@@ -19,6 +19,6 @@ class IsAdmin
         {
             return $next($request);
         }
-        return redirect()->route('home')-with('error','You are not a admin');
+        return redirect()->route('/')-with('error','You are not a admin');
     }
 }
