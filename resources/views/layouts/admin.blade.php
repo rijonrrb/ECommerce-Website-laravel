@@ -15,10 +15,61 @@
   <link rel="stylesheet" href="{{ asset('Dashboard')}}/dist/css/adminlte.min.css">
   <!-- toastr style -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{ asset('Dashboard')}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="{{ asset('Dashboard')}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="{{ asset('Dashboard')}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+  <link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.19/dist/sweetalert2.min.css
+" rel="stylesheet">
+  <style>
+    .colored-toast.swal2-icon-success {
+    background-color: #a5dc86 !important;
+    opacity: 0.95;
+    }
+
+    .colored-toast.swal2-icon-error {
+    background-color: #f27474 !important;
+    opacity: 0.95;
+    }
+
+    .colored-toast.swal2-icon-warning {
+    background-color: #f8bb86 !important;
+    opacity: 0.95;
+    }
+
+    .colored-toast.swal2-icon-info {
+    background-color: #3fc3ee !important;
+    opacity: 0.95;
+    }
+
+    .colored-toast.swal2-icon-question {
+    background-color: #87adbd !important;
+    opacity: 0.95;
+    }
+
+    .colored-toast .swal2-title {
+    color: white;
+    }
+
+    .colored-toast .swal2-close {
+    color: white;
+    }
+
+    .colored-toast .swal2-html-container {
+    color: white;
+    }
+
+    body.swal2-shown > [aria-hidden="true"] {
+    transition: 0.1s filter;
+    filter: blur(10px);
+    }
+  </style>
 
 </head>
 <body>
-<div class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<div class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 
 
 @guest
@@ -30,10 +81,10 @@
 
 <div class="wrapper">
 
-  <!-- Preloader -->
+  <!-- Preloader 
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__wobble" src="{{ asset('Dashboard')}}/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
+  </div> -->
 
 
 @endguest
@@ -73,28 +124,111 @@
 AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('Dashboard')}}/dist/js/pages/dashboard2.js')}}"></script>
 
-
+<script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.19/dist/sweetalert2.all.min.js
+"></script>
 <script>
   @if(Session::has('messege'))
   var type="{{Session::get('alert-type','info')}}"
+
+  const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  iconColor: 'white',
+  customClass: {
+    popup: 'colored-toast'
+  },
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
   switch (type) {
     case 'info':
-      toastr.info("{{ Session::get('messege')}}", "", {closeButton: true,  progressBar: true, positionClass: 'toast-top-center', timeOut: 5000});
+      Toast.fire({
+      icon: 'info',
+      title: "{{ Session::get('messege')}}"
+      })
       break;
     case 'success':
-      toastr.success("{{ Session::get('messege')}}", "", {closeButton: true,  progressBar: true, positionClass: 'toast-top-center', timeOut: 2500});
+      Toast.fire({
+      icon: 'success',
+      title: "{{ Session::get('messege')}}"
+      })
       break; 
     case 'warning':
-      toastr.warning("{{ Session::get('messege')}}", "", {closeButton: true,  progressBar: true, positionClass: 'toast-top-center', timeOut: 5000});
+      Toast.fire({
+      icon: 'warning',
+      title: "{{ Session::get('messege')}}"
+      })
       break;
     case 'error':
-      toastr.error("{{ Session::get('messege')}}", "", {closeButton: true,  progressBar: true, positionClass: 'toast-top-center', timeOut: 5000});
+      Toast.fire({
+      icon: 'error',
+      title: "{{ Session::get('messege')}}"
+      })
       break;
-
-      
+    case 'question':
+      Toast.fire({
+      icon: 'question',
+      title: "{{ Session::get('messege')}}"
+      })
+      break;
   }
-
 @endif
+</script>
+<script>
+  $(document).on("click","#delete", function(e){
+  e.preventDefault();
+  var link = $(this).attr("href");
+  Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = link;
+  }
+});
+});
+</script>
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('Dashboard')}}/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="{{ asset('Dashboard')}}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="{{ asset('Dashboard')}}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="{{ asset('Dashboard')}}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="{{ asset('Dashboard')}}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('Dashboard')}}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="{{ asset('Dashboard')}}/plugins/jszip/jszip.min.js"></script>
+<script src="{{ asset('Dashboard')}}/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="{{ asset('Dashboard')}}/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="{{ asset('Dashboard')}}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="{{ asset('Dashboard')}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="{{ asset('Dashboard')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
 </script>
 </body>
 </html>

@@ -9,4 +9,10 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin', 'middleware'=>'is_admin
 {
     Route::get('/Admin/Home', 'AdminController@admin')->name('admin.home');
     Route::get('/Admin/Logout', 'AdminController@logout')->name('admin.logout');
+
+    Route::group(['prefix' => 'category'], function() {
+        Route::get('/', 'CategoryController@index')->name('category.index');
+        Route::post('store', 'CategoryController@store')->name('category.store');
+        Route::get('/delete/{id}', 'CategoryController@delete')->name('category.delete');
+    });
 });
