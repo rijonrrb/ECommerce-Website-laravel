@@ -57,7 +57,8 @@ class LoginController extends Controller
             }
         }
         else {
-            return redirect()->back()->with('failed','Invalid email or password');
+            $notification= array('messege' => 'Invalid email or password', 'alert-type' => 'warning');
+            return redirect()->back()->with($notification);
         }
     }
 

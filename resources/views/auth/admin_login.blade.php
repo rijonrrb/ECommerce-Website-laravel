@@ -6,7 +6,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="{{ url ('/') }}" class="h1"><b>Admin</b>LTE</a>
+      <a href="{{ url ('/') }}" class="h1"><b>Daily-Ecommerce</a>
     </div> 
     <div class="card-body">
       <p class="login-box-msg">Admin Login</p>
@@ -23,8 +23,8 @@
         </div>
         <div class="row">
           <div class="col-8">
-            <div class="icheck-primary">
-            <input  type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+            <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
               <label for="remember">
                 Remember Me
               </label>
@@ -53,4 +53,5 @@
                                 {{ Session::get('failed') }}
                             </div>
                         @endif
+                        
  @endsection
