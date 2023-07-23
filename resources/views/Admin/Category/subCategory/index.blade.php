@@ -8,7 +8,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Category</h1>
+                <h1 class="m-0">Sub Category</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -27,7 +27,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">All primary categories list here</h3>
+            <h3 class="card-title">All sub categories list here</h3>
         </div>
         <!-- /.card-header -->
         @php        
@@ -39,8 +39,9 @@
               <thead>
                   <tr>
                     <th>SL</th>
-                    <th>Category Name</th>
-                    <th>Category Slug</th>
+                    <th>Subcategory Name</th>
+                    <th>Subcategory Slug</th>
+                    <th>Primecategory Name</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -48,11 +49,12 @@
               @foreach ($datas as $data)
               <tr>
                 <td>{{$i++}}</td>
+                <td>{{ $data->subcategory_name }}</td>
+                <td>{{ $data->subcategory_slug }}</td>
                 <td>{{ $data->category_name }}</td>
-                <td>{{ $data->category_slug }}</td>
                 <td>
                     <a href="#" class="btn btn-info btn-md mr-1" id="edit" data-id="{{ $data->id }}" data-toggle="modal" data-target="#e_categoryModal"><i class="fas fa-edit"></i></a> 
-                    <a href="{{ route('category.delete', $data->id) }}" class="btn btn-danger btn-md" id="delete"><i class="fas fa-trash-alt"></i></a>
+                    <a href="{{ route('subcategory.delete', $data->id) }}" class="btn btn-danger btn-md" id="delete"><i class="fas fa-trash-alt"></i></a>
                 </td>
             </tr>
             @endforeach
@@ -76,14 +78,22 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="{{ route('category.store') }}" method="Post"> 
+      <form action="{{ route('subcategory.store') }}" method="Post"> 
           @csrf
       <div class="modal-body">
-        <div class="form-group">
+      <div class="form-group">
             <label for="category_name">Category Name</label>
-            <input type="text" class="form-control {{$errors->first('category_name') ? 'is-invalid' : ''}}" id="category_name" name="category_name" placeholder="Add Category">
-            {!! $errors->first('category_name', '<div class="invalid-feedback">:message</div>') !!}
-            <small id="category_name" class="form-text text-muted">This is your main category</small>
+            <select class="form-control" name="category_id" required="">
+                @foreach($categories as $category)
+                <option value="{{ $category->id}}">{{ $category->category_name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="subcategory_name">Category Name</label>
+            <input type="text" class="form-control {{$errors->first('subcategory_name') ? 'is-invalid' : ''}}" id="subcategory_name" name="subcategory_name" placeholder="Add Category">
+            {!! $errors->first('subcategory_name', '<div class="invalid-feedback">:message</div>') !!}
+            <small id="subcategory_name" class="form-text text-muted">This is your sub category</small>
         </div>
       </div>
       <div class="modal-footer">
@@ -112,7 +122,7 @@
             <input type="hidden" id="e_category_id" name="e_category_id">
             <input type="text" class="form-control {{$errors->first('e_category_name') ? 'is-invalid' : ''}}" id="e_category_name" name="e_category_name" placeholder="Edit Category">
             {!! $errors->first('e_category_name', '<div class="invalid-feedback">:message</div>') !!}
-            <small id="e_category_name" class="form-text text-muted">This is your main category</small>
+            <small id="e_category_name" class="form-text text-muted">This is your sub category</small>
         </div>
       </div>
       <div class="modal-footer">

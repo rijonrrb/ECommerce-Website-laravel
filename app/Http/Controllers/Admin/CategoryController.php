@@ -55,5 +55,32 @@ class CategoryController extends Controller
         }
     }
 
+    //edit method
+    public function edit($id)
+    {
+
+    	$data = Category::find($id);
+        return response()->json($data);
+
+    }
+
+    //update method
+    public function update(Request $request)
+    {
+        $data = Category::where('id',$request->e_category_id)->first();
+        $data->category_name = $request->e_category_name;
+        $data->category_slug = Str::slug($request->e_category_name,'-');
+        $result = $data->save(); 
+        if($result){
+            $notification= array('messege' => 'Category Updated', 'alert-type' => 'success');
+            return redirect()->back()->with($notification);
+        }
+        else{
+            $notification= array('messege' => 'Category Updating Failed', 'alert-type' => 'error');
+            return redirect()->back()->with($notification);
+        }
+    
+    }
+
 
 }
