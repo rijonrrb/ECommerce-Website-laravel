@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Subcategory extends Model
+class Childcategory extends Model
 {
     use HasFactory;
-    protected $fillable = ['subcategory_name','subcategory_slug','category_id'];
+    protected $fillable = ['category_id','subcategory_id','childcategory_slug','childcategory_name'];
 }

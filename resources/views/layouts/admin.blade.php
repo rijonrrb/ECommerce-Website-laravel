@@ -68,9 +68,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.19/dist/sweetalert2.min.css
   </style>
 
 </head>
-<body>
-<div class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-
+<body class="sidebar-mini sidebar-mini-md sidebar-mini-xs layout-navbar-fixed layout-fixed sidebar-closed sidebar-collapse">
 
 @guest
 
@@ -98,7 +96,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.19/dist/sweetalert2.min.css
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-</div>
+
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="{{ asset('Dashboard')}}/plugins/jquery/jquery.min.js"></script>

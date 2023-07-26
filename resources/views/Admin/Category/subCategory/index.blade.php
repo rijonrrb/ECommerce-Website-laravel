@@ -53,7 +53,7 @@
                 <td>{{ $data->subcategory_slug }}</td>
                 <td>{{ $data->category_name }}</td>
                 <td>
-                    <a href="#" class="btn btn-info btn-md mr-1" id="edit" data-id="{{ $data->id }}" data-toggle="modal" data-target="#e_categoryModal"><i class="fas fa-edit"></i></a> 
+                    <a href="#" class="btn btn-info btn-md mr-1" id="edit" data-id="{{ $data->id }}" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a> 
                     <a href="{{ route('subcategory.delete', $data->id) }}" class="btn btn-danger btn-md" id="delete"><i class="fas fa-trash-alt"></i></a>
                 </td>
             </tr>
@@ -105,43 +105,31 @@
   </div>
 </div>
 <!--Edit Category Modal -->
-<div class="modal fade" id="e_categoryModal" tabindex="-1" role="dialog" aria-labelledby="e_categoryModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="e_categoryModalLabel">Edit Category</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Subategory</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="{{ route('category.update') }}" method="Post"> 
-          @csrf
-      <div class="modal-body">
-        <div class="form-group">
-            <label for="e_category_name">Category Name</label>
-            <input type="hidden" id="e_category_id" name="e_category_id">
-            <input type="text" class="form-control {{$errors->first('e_category_name') ? 'is-invalid' : ''}}" id="e_category_name" name="e_category_name" placeholder="Edit Category">
-            {!! $errors->first('e_category_name', '<div class="invalid-feedback">:message</div>') !!}
-            <small id="e_category_name" class="form-text text-muted">This is your sub category</small>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="Submit" class="btn btn-primary">Submit</button>
-      </div>
-     </form>
+     <div id="modal_body">
+     		
+     </div>	
     </div>
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
-	$(document).on('click','#edit', function(){
-		let cat_id=$(this).data('id');
-		$.get("category/edit/"+cat_id, function(data){
-			 $("#e_category_name").val(data.category_name);
-       $("#e_category_id").val(data.id);
+	$('body').on('click','#edit', function(){
+		let subcat_id=$(this).data('id');
+		$.get("subcategory/edit/"+subcat_id, function(data){
+			$("#modal_body").html(data);
 		});
 	});
+
+
 
 </script>
 @endsection

@@ -1,5 +1,5 @@
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="overflow-y: scroll;">
+  <aside class="main-sidebar elevation-4 sidebar-light-olive" >
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link d-flex">
       <span class="brand-text font-weight-bold ml-3"> Admin Dashboard</span>
@@ -50,7 +50,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="{{ route ('childcategory.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Child Category</p>
                 </a>
