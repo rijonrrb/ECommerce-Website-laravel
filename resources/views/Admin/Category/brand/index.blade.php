@@ -1,13 +1,19 @@
 @extends('layouts.admin')
 
 @section('admin_content')
+<style>
+   .dropify-wrapper .dropify-message p {
+    font-size:16px;
+}
+</style>
+
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Child Category</h1>
+            <h1 class="m-0">Brand</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -24,7 +30,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">All Child-categories list here</h3>
+                <h3 class="card-title">All Brand List Here</h3>
               </div>
               <!-- /.card-header -->
                 <div class="card-body">
@@ -32,9 +38,9 @@
                     <thead>
                     <tr>
                       <th>SL</th>
-                      <th>ChildCategory Name</th>
-                      <th>Category Name</th>
-                      <th>SubCategory Name</th>
+                      <th>Brand Name</th>
+                      <th>Brand Slug</th>
+                      <th>Brand Logo</th>
                       <th>Action</th>
                     </tr>
                     </thead>
@@ -56,34 +62,24 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add New Child Category</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add New Brand</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-     <form action="{{ route('childcategory.store') }}" method="Post" id="add-form">
+     <form action="{{ route('brand.store') }}" method="Post" enctype="multipart/form-data" id="add-form">
       @csrf
       <div class="modal-body">
-      	  <div class="form-group">
-            <label for="category_name">Category/Subcategory </label>
-            <select class="form-control" name="subcategory_id" required="">
-            	@foreach($category as $row)
-                  @php 
-                    $subcat=DB::table('subcategories')->where('category_id',$row->id)->get();
-                  @endphp
-                  <option disabled="" style="color: blue;"
-                  >{{ $row->category_name }}</option>
-                  @foreach($subcat as $row)
-            	        <option value="{{ $row->id }}">	&#9679; {{ $row->subcategory_name }}</option>
-                  @endforeach    
-            	@endforeach
-            </select>
-          </div>
           <div class="form-group">
-            <label for="category_name">Child Category Name</label>
-            <input type="text" class="form-control"  name="childcategory_name" required="">
-            <small id="emailHelp" class="form-text text-muted">This is your childcategory category</small>
-          </div>   
+            <label for="brand-name">Brand Name</label>
+            <input type="text" class="form-control"  name="brand_name" required="">
+            <small id="emailHelp" class="form-text text-muted">This is your Brand </small>
+          </div>
+           <div class="form-group">
+            <label for="brand-name">Brand Logo</label>
+            <input type="file" class="dropify" data-height="200"  name="brand_logo"/>
+            <small id="emailHelp" class="form-text text-muted">This is your Brand Logo </small>
+          </div> 
       </div>
       <div class="modal-footer">
         <button type="Submit" class="btn btn-primary"> <span class="d-none"> loading..... </span>  Submit</button>
@@ -98,7 +94,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Child Category</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Brand</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -112,31 +108,33 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
 <script type="text/javascript">
 	$(function childcategory(){
 		var table=$('.ytable').DataTable({
 			processing:true,
 			serverSide:true,
-			ajax:"{{ route('childcategory.index') }}",
+			ajax:"{{ route('brand.index') }}",
 			columns:[
 				{data:'DT_RowIndex',name:'DT_RowIndex'},
-				{data:'childcategory_name'  ,name:'childcategory_name'},
-				{data:'category_name',name:'category_name'},
-				{data:'subcategory_name',name:'subcategory_name'},
+				{data:'brand_name'  ,name:'brand_name'},
+				{data:'brand_slug',name:'brand_slug'},
+				{data:'brand_logo',name:'brand_logo', render: function(data, type ,full,meta){
+					return "<img src=\"" +data+ "\"  height=\"30\" />";
+				}},
 				{data:'action',name:'action',orderable:true, searchable:true},
 
 			]
 		});
 	});
 
-
   $('body').on('click','.edit', function(){
     let id=$(this).data('id');
-    $.get("childcategory/edit/"+id, function(data){
-        $("#modal_body").html(data);
+    $.get("brand/edit/"+id, function(data){
+         $("#modal_body").html(data);
     });
   });
+
+
 
 </script>
 

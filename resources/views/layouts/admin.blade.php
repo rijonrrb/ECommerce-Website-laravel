@@ -20,9 +20,8 @@
   <link rel="stylesheet" href="{{ asset('Dashboard')}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="{{ asset('Dashboard')}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
-  <link href="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.7.19/dist/sweetalert2.min.css
-" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" integrity="sha512-In/+MILhf6UMDJU4ZhDL0R0fEpsp4D3Le23m6+ujDWXwl3whwpucJG1PEmI3B07nyJx+875ccs+yX2CqQJUxUw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.19/dist/sweetalert2.min.css" rel="stylesheet">
   <style>
     .colored-toast.swal2-icon-success {
     background-color: #a5dc86 !important;
@@ -227,6 +226,18 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.19/dist/sweetalert2.all.min.js
       "responsive": true,
     });
   });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+  $('.dropify').dropify({
+    messages: {
+        'default': 'Drag and drop a file here or click',
+        'replace': 'Drag and drop or click to replace',
+        'remove':  'Remove',
+        'error':   'Ooops, something wrong happended.'
+    }
+});
 </script>
 </body>
 </html>
